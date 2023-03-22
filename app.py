@@ -10,6 +10,7 @@ download(
     verbose=True,
 )
 
+
 model = YOLO(model="./pcb_weights/pcb.pt", task="detect")
 
 
