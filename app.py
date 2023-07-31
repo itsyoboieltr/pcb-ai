@@ -1,8 +1,12 @@
 import gradio as gr  # type: ignore
 from ultralytics import YOLO  # type: ignore
-from internetarchive import download  # type: ignore
+from internetarchive import download
+from huggingface_hub import hf_hub_download  # type: ignore
 
-download("pcb_weights", files=["pcb.pt"], verbose=True)  # type: ignore
+model_path = hf_hub_download(
+    repo_id="itsyoboieltr/pcb",
+    filename="pcb.pt",
+)
 
 download(
     "pcb_examples",
@@ -11,7 +15,7 @@ download(
 )
 
 
-model = YOLO(model="./pcb_weights/pcb.pt", task="detect")
+model = YOLO(model=model_path, task="detect")
 
 
 def predict_image(src):
