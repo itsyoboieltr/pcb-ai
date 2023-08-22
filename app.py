@@ -14,13 +14,8 @@ examples_path = snapshot_download(
     repo_id="itsyoboieltr/pcb",
     repo_type="dataset",
     allow_patterns=["examples/*"],
+    local_dir="./pcb_dataset",
 )
-
-examples = [
-    [f]
-    for f in iglob(f"{examples_path}/examples/*", recursive=True)
-    if os.path.isfile(f)
-]
 
 model = RTDETR(model=model_path)
 
@@ -45,8 +40,9 @@ with gr.Blocks() as demo:
             inputs=[image_input],
             outputs=[image_output],
         )
+        image_input.clear(lambda: None, outputs=[image_output], api_name=False)
     gr.Examples(
-        examples,
+        "./pcb_dataset/examples",
         [image_input],
         [image_output],
         predict_image,

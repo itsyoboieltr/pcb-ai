@@ -31,6 +31,7 @@ gradio_cached_examples
 *.mp4
 *.tar.gz
 pcb-defect-dataset
+pcb_dataset
 pcb_model
 models
 dataset
