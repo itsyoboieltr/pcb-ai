@@ -30,8 +30,7 @@ gradio_cached_examples
 *.pt
 *.mp4
 *.tar.gz
-examples
 pcb-defect-dataset
 pcb_model
-pcb_weights
-pcb_examples
+models
+dataset

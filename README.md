@@ -38,4 +38,4 @@ R. Ding, L. Dai, G. Li and H. Liu, "TDD-net: a tiny defect detection network for
 
 Technologies used:
 
-- [YOLOv8](https://github.com/ultralytics/ultralytics): Object detection model to detect and recognize defects.
+- [RT-DETR](https://github.com/lyuwenyu/RT-DETR): Object detection model to detect and recognize defects.

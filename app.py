@@ -1,21 +1,28 @@
-import gradio as gr  # type: ignore
-from ultralytics import YOLO  # type: ignore
-from internetarchive import download
-from huggingface_hub import hf_hub_download  # type: ignore
+import gradio as gr
+from ultralytics import RTDETR
+from huggingface_hub import hf_hub_download, snapshot_download
+from glob import iglob
+import os
 
 model_path = hf_hub_download(
     repo_id="itsyoboieltr/pcb",
-    filename="pcb.pt",
+    repo_type="model",
+    filename="model.pt",
 )
 
-download(
-    "pcb_examples",
-    files=["test_1.jpg", "test_2.jpg", "test_3.jpg", "test_4.jpg", "test_5.jpg", "test_6.jpg"],  # type: ignore
-    verbose=True,
+examples_path = snapshot_download(
+    repo_id="itsyoboieltr/pcb",
+    repo_type="dataset",
+    allow_patterns=["examples/*"],
 )
 
+examples = [
+    [f]
+    for f in iglob(f"{examples_path}/examples/*", recursive=True)
+    if os.path.isfile(f)
+]
 
-model = YOLO(model=model_path, task="detect")
+model = RTDETR(model=model_path)
 
 
 def predict_image(src):
@@ -39,14 +46,7 @@ with gr.Blocks() as demo:
             outputs=[image_output],
         )
     gr.Examples(
-        [
-            ["./pcb_examples/test_1.jpg"],
-            ["./pcb_examples/test_2.jpg"],
-            ["./pcb_examples/test_3.jpg"],
-            ["./pcb_examples/test_4.jpg"],
-            ["./pcb_examples/test_5.jpg"],
-            ["./pcb_examples/test_6.jpg"],
-        ],
+        examples,
         [image_input],
         [image_output],
         predict_image,
