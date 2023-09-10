@@ -31,8 +31,8 @@ with gr.Blocks() as demo:
         "This AI was trained to detect and recognize six types of defects on printed circuit boards: missing hole, mouse bite, open circuit, short, spur, and spurious copper."
     )
     with gr.Row():
-        image_input = gr.Image()
-        image_output = gr.Image()
+        image_input = gr.Image(width=486, height=238)
+        image_output = gr.Image(width=486, height=238)
         image_input.upload(
             predict_image,
             inputs=[image_input],
